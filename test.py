@@ -38,3 +38,14 @@ puppiesByWeight = (
 )
 for puppy in puppiesByWeight.all():
     print "%s\tweight: %s kg" % (puppy.name, round(puppy.weight, 2))
+
+puppiesByShelter = (
+    session.query(Puppy)  # returns Puppy objects as a tuple?
+    .order_by(asc(Puppy.shelter_id))
+    .order_by(asc(Puppy.name))  # order by name
+    # .group_by(Puppy.shelter_id)
+)
+
+for puppy in puppiesByShelter.all():
+    print "%s\tshelter id: %s" % (puppy.name, puppy.shelter_id)
+
