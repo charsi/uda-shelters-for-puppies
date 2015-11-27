@@ -27,7 +27,6 @@ if __name__ == "__main__":
         session.query(Puppy)  # returns Puppy objects
         .order_by(desc(Puppy.dateOfBirth))  # order by dob
         .filter(Puppy.dateOfBirth >= sixMonthsAgo)
-
     )
 
     for puppy in youngPuppies.all():

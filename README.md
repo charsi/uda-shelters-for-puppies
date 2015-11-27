@@ -19,5 +19,6 @@ The downloaded modules need to be extracted to the **/static** directory.
 ####Other dependencies####
  - Flask
  - SQLite
+ - WTForms extension
 
 These need to be installed on the server before running **main.py**

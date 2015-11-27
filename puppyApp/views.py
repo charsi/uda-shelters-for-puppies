@@ -1,22 +1,46 @@
+from flask import render_template, url_for, request, redirect, flash, jsonify
 
-from flask import (
-    Flask, render_template, url_for,
-    request, redirect, flash, jsonify
-)
+# import app from __init__.py
+from puppyApp import app
+
+from forms import NewPuppyForm
+
+# FlaskUtilJs to allow url_for function in javascript
 from flask_util_js import FlaskUtilJs
-app = Flask(__name__)
-
 fujs = FlaskUtilJs(app)
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Puppy, Shelter, Adopter
-import queries
 
 engine = create_engine('sqlite:///puppyshelter.db')
 Base.metadata.Bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
+
+import queries
+
+
+@app.route('/shelter/<int:shelter_id>/newpuppy/', methods=['GET', 'POST'])
+def newPuppy(shelter_id):
+    form = NewPuppyForm(request.form)
+    if request.method == 'POST' and form.validate():
+        shelter = session.query(Shelter).filter_by(id=shelter_id).one()
+        if shelter.current_occupancy >= shelter.maximum_capacity:
+            raise Exception("Shelter already at maximum capacity. Please try \
+                another one")
+        shelter.current_occupancy += 1
+        session.add(shelter)
+        puppy = Puppy()
+        puppy.name = form.name.data
+        puppy.gender = form.gender.data
+        puppy.weight = form.weight.data
+        puppy.shelter_id = shelter_id
+        session.add(puppy)
+        session.commit()
+        flash('new puppy added')
+        return redirect(url_for('shelterPage', shelter_id=shelter_id))
+    return render_template('newpuppy.html', form=form, shelter_id=shelter_id)
 
 
 @app.route('/')
@@ -52,9 +76,3 @@ def adoptPuppy():
 def adopterProfile(adopter_id):
     adopter = session.query(Adopter).filter_by(id=adopter_id).one()
     return render_template('adopterprofile.html', adopter=adopter)
-
-if __name__ == '__main__':
-    # dummy secret key; required only for message flashing
-    app.secret_key = 'super_secret_key'
-    app.debug = True
-    app.run(host='0.0.0.0', port=5000)

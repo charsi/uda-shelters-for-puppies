@@ -13,8 +13,6 @@
     <script src="/static/notifyjs/dist/notify.js"></script>
 </head>
 <body>
-<div class="container">
-<h1>{{shelter.name}}</h1>
 {% with messages = get_flashed_messages() %}
     {% if messages %}  
         {% for message in messages %}
@@ -26,6 +24,10 @@
     {% endif %}
 {% endwith %}
 
+<div class="container">
+<h1>{{shelter.name}}</h1>
+
+<a class="btn btn-default" href="{{url_for('newPuppy', shelter_id=shelter.id)}}">Add new puppy to shelter</a>
 <table class="table">
 {% for i in puppies %}
 
