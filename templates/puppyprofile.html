@@ -45,7 +45,6 @@
 <script type="text/javascript">
 
     $('#adopt_btn').click(function(){
-        //var ee = flask_util.url_for('shelterPage', {shelter_id:2});
         var ee = flask_util.url_for('adoptPuppy');
         console.log(ee);
         $.post(ee, {id:'{{puppy.id}}'}, function(result){

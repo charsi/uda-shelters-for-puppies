@@ -1,4 +1,4 @@
-#Shelters-for-puppies
+#Shelters for puppies
 This is a webapp written in python with the flask framework. It provides a system to manage a number of puppy shelters!
 
 ###Features
