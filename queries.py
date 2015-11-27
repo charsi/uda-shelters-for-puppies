@@ -1,21 +1,22 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Puppy, Shelter, Profile
+from database_setup import Base, Puppy, Shelter
 from sqlalchemy import asc, desc
 from datetime import date
 import dateutil.relativedelta
 
-engine = create_engine('sqlite:///puppyshelter.db')
-Base.metadata.Bind = engine
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
-
-puppiesByName = (
-    session.query(Puppy)  # returns Puppy objects as a tuple?
-    .order_by(asc(Puppy.name))  # order by name
-)
 
 if __name__ == "__main__":
+    engine = create_engine('sqlite:///puppyshelter.db')
+    Base.metadata.Bind = engine
+    DBSession = sessionmaker(bind=engine)
+    session = DBSession()
+
+    puppiesByName = (
+        session.query(Puppy)  # returns Puppy objects as a tuple?
+        .order_by(asc(Puppy.name))  # order by name
+    )
+
     for puppy in puppiesByName.all():
         print puppy.name
 

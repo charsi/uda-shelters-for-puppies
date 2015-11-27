@@ -1,0 +1,25 @@
+{
+  "name": "puppyshelter",
+  "authors": [
+    "nishil <charsi@users.noreply.github.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "/static",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6"
+  }
+}

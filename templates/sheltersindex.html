@@ -1,0 +1,49 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shelters</title>
+    <script src="/static/jquery/dist/jquery.min.js"></script>
+    
+    <link href="/static/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+    <script src="/static/bootstrap/dist/js/bootstrap.min.js"></script>
+    
+    <script src="/static/notifyjs/dist/notify.js"></script>
+</head>
+<body>
+
+<!-- Display flash messages if any-->
+{% with messages = get_flashed_messages() %}
+    {% if messages %}  
+        {% for message in messages %}
+            <script>
+                var msg = '{{message}}';
+                $.notify(msg, "success");
+            </script>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+
+<div class="container">
+<h1>Shelters</h1>
+
+<table class="table">
+{% for i in shelters %}
+
+<tr><td>
+	<a href="{{url_for('shelterPage', shelter_id=i.id)}}">{{i.name}}</a>
+</td></tr>
+
+
+
+{% endfor %}
+</table>
+</div>
+
+
+</body>
+
+</html>

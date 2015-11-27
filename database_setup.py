@@ -9,8 +9,8 @@ Base = declarative_base()
 
 puppy_adopter_tbl = Table(
     'association', Base.metadata,
-    Column('left_id', Integer, ForeignKey('puppy.id')),
-    Column('right_id', Integer, ForeignKey('adopter.id'))
+    Column('puppy_id', Integer, ForeignKey('puppy.id')),
+    Column('adopter_id', Integer, ForeignKey('adopter.id'))
 )
 
 
@@ -37,26 +37,17 @@ class Puppy(Base):
     gender = Column(String(10))
     weight = Column(Float)
     picture = Column(String(360))
+    description = Column(String(360))
+    splNeeds = Column(String(360))
 
     shelter_id = Column(Integer, ForeignKey('shelter.id'))
     shelter = relationship(Shelter)
 
-    profile = relationship("Profile", uselist=False, backref="puppy")
     adopter = relationship(
         "Adopter",
         secondary=puppy_adopter_tbl,
         backref="puppy"
     )
-
-
-class Profile(Base):
-    __tablename__ = 'profile'
-
-    id = Column(Integer, primary_key=True)
-    photo = Column(String(360))
-    description = Column(String(360))
-    splNeeds = Column(String(360))
-    puppy_id = Column(Integer, ForeignKey('puppy.id'))
 
 
 class Adopter(Base):
