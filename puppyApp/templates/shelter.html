@@ -1,55 +1,25 @@
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{shelter.name}}</title>
-    <script src="/static/jquery/dist/jquery.min.js"></script>
-    
-    <link href="/static/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="/static/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
-    <script src="/static/bootstrap/dist/js/bootstrap.min.js"></script>
-    
-    <script src="/static/notifyjs/dist/notify.js"></script>
-</head>
-<body>
-{% with messages = get_flashed_messages() %}
-    {% if messages %}  
-        {% for message in messages %}
-            <script>
-                var msg = '{{message}}';
-                $.notify(msg, "success");
-            </script>
-        {% endfor %}
-    {% endif %}
-{% endwith %}
+{% extends "layout.html" %}
 
-<div class="container">
-<h1>{{shelter.name}}</h1>
+{% block title %}{{shelter.name}}{% endblock %}
 
-<a class="btn btn-default" href="{{url_for('newPuppy', shelter_id=shelter.id)}}">Add new puppy to shelter</a>
-<table class="table">
-{% for i in puppies %}
-
-<tr>
-    <td><strong>{{i.name}}</strong></td>
-
-	<td>{{i.gender}}</td>
-
-	<td> {{i.dateOfBirth}}</td>
-
-    <td><a class="btn btn-default"
-        href="{{url_for('puppyProfile', puppy_id=i.id)}}">Show Profile</a></td>
-
-</tr>
-
-
-
-{% endfor %}
-</table>
-</div>
-
-
-</body>
-
-</html>
+{% block content %}
+    <h1>{{shelter.name}}</h1>
+    <div class="panel panel-default">
+    <div class="panel-body">
+        <p><a href="http://{{shelter.website}}">{{shelter.website}}</a></p>
+        <p>{{shelter.address}} {{shelter.city}} {{shelter.state}} {{shelter.zipCode}}</p>
+        <p>Current occupancy : {{shelter.current_occupancy}} / {{shelter.maximum_capacity}}</p>
+    </div>
+    </div>
+    <p><a class="btn btn-default" href="{{url_for('newPuppy', shelter_id=shelter.id)}}">Add new puppy to shelter</a></p>
+    <table class="table">
+    {% for i in puppies %}
+        <tr>
+        <td><strong>{{i.name}}</strong></td>
+    	<td>{{i.gender}}</td>
+    	<td> {{i.dateOfBirth}}</td>
+        <td><a class="btn btn-default" href="{{url_for('puppyProfile', puppy_id=i.id)}}">Show Profile</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

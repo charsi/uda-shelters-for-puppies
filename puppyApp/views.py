@@ -19,7 +19,18 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 import queries
+from datetime import datetime
 
+
+def updateShelterOccupancy():
+    shelters = session.query(Shelter)
+    for shelter in shelters:
+        shelter_id = shelter.id
+        shelter.current_occupancy = (
+            session.query(Puppy).filter_by(shelter_id=shelter_id).count()
+        )
+        session.add(shelter)
+        session.commit()
 
 @app.route('/shelter/<int:shelter_id>/newpuppy/', methods=['GET', 'POST'])
 def newPuppy(shelter_id):
@@ -36,9 +47,10 @@ def newPuppy(shelter_id):
         puppy.gender = form.gender.data
         puppy.weight = form.weight.data
         puppy.shelter_id = shelter_id
+        puppy.dateOfBirth = datetime.strptime(form.dob.data, '%Y-%m-%d').date()
         session.add(puppy)
         session.commit()
-        flash('new puppy added')
+        flash('new puppy added',"success")
         return redirect(url_for('shelterPage', shelter_id=shelter_id))
     return render_template('newpuppy.html', form=form, shelter_id=shelter_id)
 
