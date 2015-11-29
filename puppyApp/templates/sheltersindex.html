@@ -1,7 +1,22 @@
 {% extends "layout.html" %}
-{% block title %}Shelter Index{% endblock %}
+
+{% block title %}
+Shelter Index
+{% endblock %}
+
 {% block content %}
-    <h1>Shelters</h1>
+<div class="row">
+<div class="col-md-6">
+<div class="alert alert-warning alert-dismissible fade in" role="alert">
+  <button type="button" class="close" data-dismiss="alert" ><span>&times;</span></button>
+  <strong>This app is just a demo!</strong> so you can't really adopt any of the puppies shown. The shelters listed below however are real. There are links to their websites on the next page.
+</div>
+</div>
+    </div>
+<div class="row">
+<div class="col-md-4">
+
+    <h1><i class="fa fa-paw"></i> Shelters</h1>
     <table class="table">
     {% for i in shelters %}
         <tr><td>
@@ -9,4 +24,6 @@
         </td></tr>
     {% endfor %}
     </table>
+    </div>
+    </div>
 {% endblock %}

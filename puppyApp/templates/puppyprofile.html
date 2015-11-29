@@ -3,18 +3,23 @@
 {% block title %}{{puppy.name}}{% endblock %}
 
 {% block content %}
-    {{ flask_util_js.js }}
+<span class=" glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+<a href="{{url_for('shelterPage',shelter_id=puppy.shelter.id)}}">Back to shelter</a>
     <h1>{{puppy.name}}</h1>
-    <img src='{{puppy.picture}}' />
+    <img src='{{puppy.picture}}' width="380">
+    <div class="row">
+    <div class="col-md-4">
     <table class="table">
         <tr><td>Gender</td><td>{{puppy.gender}}</td></tr>
-        <tr><td>DOB</td><td> {{puppy.dateOfBirth}}</td></tr>
-        <tr><td>Weight</td><td> {{puppy.weight}}</td></tr>
+        <tr><td>DOB</td><td>{{puppy.dateOfBirth}}</td></tr>
+        <tr><td>Weight</td><td>{{'%0.2f' % puppy.weight|float}} Kgs</td></tr>
         <tr><td>Details</td><td> {{puppy.description}}</td></tr>
-        <tr><td>Special needs</td><td> {{puppy.splNeeds}}</td></tr>
-        <tr><td>Currently at</td><td> {{puppy.shelter.name}}</td></tr>
-        <tr><td>Adopter(s)</td><td> {{puppy.adopter}}</td></tr>
+        <tr><td>Special needs</td><td>{{puppy.splNeeds}}</td></tr>
+        <tr><td>Currently at</td><td><a href="{{url_for('shelterPage',shelter_id=puppy.shelter.id)}}">{{puppy.shelter.name}}</a></td></tr>
+        <tr><td>Adopter(s)</td><td>{{puppy.adopter}}</td></tr>
     </table>
+    </div>
+</div>
 <button class="btn btn-default" id="adopt_btn">Adopt Me!</button>
 {% endblock %}
 {% block footer %}

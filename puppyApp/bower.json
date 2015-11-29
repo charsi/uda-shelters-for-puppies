@@ -20,6 +20,10 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "~3.3.6"
+    "bootstrap": "~3.3.6",
+    "notifyjs": "~0.4.0",
+    "moment": "~2.10.6",
+    "font-awesome": "fontawesome#~4.5.0",
+    "gmaps": "~0.4.21"
   }
 }

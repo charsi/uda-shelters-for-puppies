@@ -6,24 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %} - Puppyshelter</title>
-    <link href="/static/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="/static/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
-    <script src="/static/jquery/dist/jquery.min.js"></script>
+    <link href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/static/bower_components/font-awesome/css/font-awesome.min.css">
+
+    
 {% endblock %}
+{{ moment.include_jquery() }}
+{{ moment.include_moment() }}
+{{ flask_util_js.js }}
 </head>
 <body>
 
-<!-- Display flash messages if any-->
-{% with messages = get_flashed_messages() %}
-    {% if messages %}  
-        {% for message in messages %}
-            <script>
-                var msg = '{{message}}';
-                $.notify(msg, "success");
-            </script>
-        {% endfor %}
-    {% endif %}
-{% endwith %}
+
 
 
 <div class="container">
@@ -31,15 +26,30 @@
 	{% block content %}{% endblock %}
 	</div>
 	<div id="footer">
-		<p>Made by <a href="mailto:nishyl@gmail.com">Nishil</a> as part of project work for a course at <a href="https://www.udacity.com/course/nd004">Udacity</a>.
-		Source code available at <a href="https://github.com/charsi/uda-shelters-for-puppies">GitHub</a></p>
-
-	    <script src="/static/bootstrap/dist/js/bootstrap.min.js"></script>
-	    <script src="/static/notifyjs/dist/notify.js"></script>
+    <hr>
+		<small><p>Made with <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> by <a href="mailto:nishyl@gmail.com">Nishil</a>. Part of a demo for a course at <a href="https://www.udacity.com/course/nd004">Udacity</a>.<br>
+		Source code available at <a href="https://github.com/charsi/uda-shelters-for-puppies">GitHub</a></p></small>
+        <script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	    <script src="/static/bower_components/notifyjs/dist/notify.js"></script>
+        <script type="text/javascript">
+            //$.notify.defaults({ position:"top center" });
+        </script>
 		{% block footer %}
 		{% endblock %}
 	</div>
 </div>
 </body>
-
+<!-- Display flash messages if any-->
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}  
+        {% for category, message in messages %}
+            <script>
+                var msg = '{{message}}';
+                var cat = '{{category}}';
+                $.notify(msg,cat);
+            </script>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 </html>

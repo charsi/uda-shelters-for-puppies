@@ -3,7 +3,11 @@
 {% block title %}New Puppy{% endblock %}
 
 {% block content %}
-    <h1>Add new puppy</h1>
+<span class=" glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+<a href="{{url_for('shelterPage',shelter_id=shelter_id)}}">Back to shelter</a>
+<div class="row">
+  <div class="col-md-3">
+    <h2>Add new puppy</h2>
 
     {% if form.errors %}
         <ul class="errors">
@@ -16,10 +20,18 @@
     {% endif %}
 
     <form method="POST" action="{{url_for('newPuppy', shelter_id=shelter_id)}}">
-        <div>{{ form.name.label }}: {{ form.name() }}</div>
-        <div>{{ form.gender.label }}: {{ form.gender() }}</div>
-        <div>{{ form.weight.label }}: {{ form.weight() }} Kgs</div>
-        <div>{{ form.dob.label }}: {{ form.dob() }} ( yyyy-mm-dd )</div>
+        <div class="form-group">{{ form.name.label }}: {{ form.name(class_="form-control") }}</div>
+        <div class="form-group">{{ form.gender.label }}: {{ form.gender(class_="form-control") }}</div>
+        <div class="form-group">{{ form.weight.label }}: {{ form.weight(class_="form-control") }} Kgs</div>
+        <div class="form-group">{{ form.dob.label }}: {{ form.dob(class_="form-control") }} ( yyyy-mm-dd )</div>
         <input class="btn btn-default" type='submit' value='Add Puppy'>
     </form>
+</div>
+</div>
 {% endblock %}
+{% block footer %}
+<script type="text/javascript">
+
+</script>
+{% endblock %}
+
